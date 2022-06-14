@@ -62,7 +62,7 @@ namespace EmpPayRollDB
         {
             connection();
             List<EmpModel> EmpList = new List<EmpModel>();
-            SqlCommand com = new SqlCommand("SPViewEmployees", con);
+            SqlCommand com = new SqlCommand("spViewDetailPerson", con);
             com.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataTable dt = new DataTable();
@@ -82,11 +82,11 @@ namespace EmpPayRollDB
                         Gender = Convert.ToString(dr["Gender"]),
                         ContactNumber = Convert.ToString(dr["ContactNumber"]),
                         Address = Convert.ToString(dr["Address"]),
-                        Pay = Convert.ToDecimal(dr["Basic_Pay"]),
+                        Pay = Convert.ToDecimal(dr["Pay"]),
                         Deduction = Convert.ToDecimal(dr["Deduction"]),
-                        TexablePay = Convert.ToDecimal(dr["Taxable_Pay"]),
+                        TexablePay = Convert.ToDecimal(dr["TaxablePay"]),
                        
-                        IncomeTax = Convert.ToDecimal(dr["Income_Tax"]),
+                        IncomeTax = Convert.ToDecimal(dr["IncomeTax"]),
                         NetPay = Convert.ToDecimal(dr["NetPay"])
                     }
                     );
