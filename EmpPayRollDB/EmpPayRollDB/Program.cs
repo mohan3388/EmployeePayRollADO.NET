@@ -14,14 +14,14 @@ public class Program
 
         while (check)
         {
-            Console.WriteLine("1. To Insert the Data in Data Base \n2. Retrive the data in database");
+            Console.WriteLine("1. To Insert the Data in Data Base \n2. Retrive the data in database\n3. Update data in database");
             Console.WriteLine("Enter the Above Option");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
                 case 1:
                     EmpModel empModel = new EmpModel();
-                    empModel.Id = 111;
+                   
                     empModel.Name = "Raunak";
                     empModel.Salary = 50000;
                     empModel.StartDate = DateTime.Now;
@@ -42,6 +42,12 @@ public class Program
                     {
                         Console.WriteLine(data.Id + " " + data.Name + " " + data.Salary + " " + data.Gender + " " + data.StartDate + " " + data.Address + " " + data.ContactNumber + " " + data.Pay + " " + data.TexablePay + " " + data.Deduction +" " + data.IncomeTax + " " + data.NetPay);
                     }
+                    break;
+                case 3:
+                    EmpModel emp = new EmpModel();
+                    emp.Id = 2;
+                    emp.Salary = 80000;
+                    empservice.UpdateEmp(emp);
                     break;
                 case 0:
                     check = false;

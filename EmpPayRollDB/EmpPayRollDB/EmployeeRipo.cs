@@ -23,23 +23,23 @@ namespace EmpPayRollDB
                 connection();
                 SqlCommand com = new SqlCommand("spAddNewEmpPerson", con);
                 com.CommandType = CommandType.StoredProcedure;
-                com.Parameters.AddWithValue("@Id", obj.Id);
+                //com.Parameters.AddWithValue("@Id", obj.Id);
                 com.Parameters.AddWithValue("@Name", obj.Name);
                 com.Parameters.AddWithValue("@Salary", obj.Salary);
                 com.Parameters.AddWithValue("@StartDate", obj.StartDate);
                 com.Parameters.AddWithValue("@Gender", obj.Gender);
-                com.Parameters.AddWithValue("@PhoneNumber", obj.ContactNumber);
+                com.Parameters.AddWithValue("@ContactNumber", obj.ContactNumber);
                 com.Parameters.AddWithValue("@Address", obj.Address);
                 com.Parameters.AddWithValue("@Pay", obj.Pay);
                 com.Parameters.AddWithValue("@Deduction", obj.Deduction);
-                com.Parameters.AddWithValue("@TaxablePay", obj.TexablePay);
+                com.Parameters.AddWithValue("@TexablePay", obj.TexablePay);
                 
                 com.Parameters.AddWithValue("@IncomeTax", obj.IncomeTax);
                 com.Parameters.AddWithValue("@NetPay", obj.NetPay);
                 con.Open();
                 int i = com.ExecuteNonQuery();
                 con.Close();
-                if (i >= 1)
+                if (i == 1)
                 {
                     return "data Added";
                 }
@@ -62,7 +62,7 @@ namespace EmpPayRollDB
         {
             connection();
             List<EmpModel> EmpList = new List<EmpModel>();
-            SqlCommand com = new SqlCommand("SPViewEmployees", con);
+            SqlCommand com = new SqlCommand("spViewDetailPerson", con);
             com.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataTable dt = new DataTable();
@@ -82,16 +82,38 @@ namespace EmpPayRollDB
                         Gender = Convert.ToString(dr["Gender"]),
                         ContactNumber = Convert.ToString(dr["ContactNumber"]),
                         Address = Convert.ToString(dr["Address"]),
-                        Pay = Convert.ToDecimal(dr["Basic_Pay"]),
+                        Pay = Convert.ToDecimal(dr["Pay"]),
                         Deduction = Convert.ToDecimal(dr["Deduction"]),
-                        TexablePay = Convert.ToDecimal(dr["Taxable_Pay"]),
+                        TexablePay = Convert.ToDecimal(dr["TexablePay"]),
                        
-                        IncomeTax = Convert.ToDecimal(dr["Income_Tax"]),
+                        IncomeTax = Convert.ToDecimal(dr["IncomeTax"]),
                         NetPay = Convert.ToDecimal(dr["NetPay"])
                     }
                     );
             }
             return EmpList;
+        }
+        //To Update Emp data   
+        public bool UpdateEmp(EmpModel obj)
+        {
+            connection();
+            SqlCommand com = new SqlCommand("SPUpdateEmpDetails", con);
+
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@Id", obj.Id);
+            com.Parameters.AddWithValue("@Salary", obj.Salary);
+
+            con.Open();
+            int i = com.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
