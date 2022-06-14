@@ -57,6 +57,42 @@ namespace EmpPayRollDB
                 this.con.Close();
             }
         }
+
+        public List<EmpModel> GetAllEmployees()
+        {
+            connection();
+            List<EmpModel> EmpList = new List<EmpModel>();
+            SqlCommand com = new SqlCommand("SPViewEmployees", con);
+            com.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataTable dt = new DataTable();
+            con.Open();
+            da.Fill(dt);
+            con.Close();
+            //Bind EmpModel generic list using dataRow     
+            foreach (DataRow dr in dt.Rows)
+            {
+                EmpList.Add(
+                    new EmpModel
+                    {
+                        Id = Convert.ToInt32(dr["Id"]),
+                        Name = Convert.ToString(dr["Name"]),
+                        Salary = Convert.ToDecimal(dr["Salary"]),
+                        StartDate = Convert.ToDateTime(dr["StartDate"]),
+                        Gender = Convert.ToString(dr["Gender"]),
+                        ContactNumber = Convert.ToString(dr["ContactNumber"]),
+                        Address = Convert.ToString(dr["Address"]),
+                        Pay = Convert.ToDecimal(dr["Basic_Pay"]),
+                        Deduction = Convert.ToDecimal(dr["Deduction"]),
+                        TexablePay = Convert.ToDecimal(dr["Taxable_Pay"]),
+                       
+                        IncomeTax = Convert.ToDecimal(dr["Income_Tax"]),
+                        NetPay = Convert.ToDecimal(dr["NetPay"])
+                    }
+                    );
+            }
+            return EmpList;
+        }
     }
 }
 

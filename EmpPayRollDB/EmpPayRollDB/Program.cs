@@ -6,6 +6,7 @@ public class Program
 {
     public static void Main(String[] args)
     {
+        EmployeeRipo empservice = new EmployeeRipo();
         Console.WriteLine("Welcome in the Employee Pay Roll Service");
         EmployeeRipo payrollService = new EmployeeRipo();
         bool check = true;
@@ -13,7 +14,7 @@ public class Program
 
         while (check)
         {
-            Console.WriteLine("1. To Insert the Data in Data Base \n");
+            Console.WriteLine("1. To Insert the Data in Data Base \n2. Retrive the data in database");
             Console.WriteLine("Enter the Above Option");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
@@ -34,6 +35,13 @@ public class Program
                     empModel.IncomeTax = 500;
                     empModel.NetPay = 2000;
                     payrollService.AddEmp(empModel);
+                    break;
+                case 2:
+                    List<EmpModel> empList = empservice.GetAllEmployees();
+                    foreach (EmpModel data in empList)
+                    {
+                        Console.WriteLine(data.Id + " " + data.Name + " " + data.Salary + " " + data.Gender + " " + data.StartDate + " " + data.Address + " " + data.ContactNumber + " " + data.Pay + " " + data.TexablePay + " " + data.Deduction +" " + data.IncomeTax + " " + data.NetPay);
+                    }
                     break;
                 case 0:
                     check = false;
