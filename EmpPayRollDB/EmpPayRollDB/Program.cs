@@ -67,6 +67,21 @@ public class Program
                         }
                     }
                     break;
+                case 5:
+                    List<EmpModel> dateList = payrollService.GetAllEmployees();
+                    Console.WriteLine("Please Enter the Date");
+                    DateTime dateTime = Convert.ToDateTime(Console.ReadLine());
+                    payrollService.RetrieveByDate(dateTime);
+                    foreach (EmpModel data in dateList)
+                    {
+                        if (data.StartDate.Equals(dateTime))
+                        {
+                            Console.WriteLine(data.Id + " " + data.Name + " " + data.Salary + " " + data.Gender + " " + data.StartDate + " " + data.Address + " " + data.ContactNumber + " " + data.Pay + " " + data.Deduction + " " + data.TexablePay + " " + data.IncomeTax + " " + data.NetPay);
+
+                        }
+                    }
+
+                    break;
                 case 0:
                     check = false;
                     break;
@@ -75,6 +90,6 @@ public class Program
                     break;
             }
         }
-
+        
     }
 }

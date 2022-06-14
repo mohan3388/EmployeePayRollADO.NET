@@ -135,6 +135,26 @@ namespace EmpPayRollDB
                 return false;
             }
         }
+        public bool RetrieveByDate(DateTime date)
+        {
+            connection();
+            SqlCommand com = new SqlCommand("spViewSameDateJoinPerson", con);
+
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@StartDate", date);
+
+            con.Open();
+            int i = com.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
 
